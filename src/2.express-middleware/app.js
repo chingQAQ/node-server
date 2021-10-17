@@ -1,4 +1,4 @@
-﻿const { greeting, basicallyQuestion } = require('../lib/middleware');
+﻿const { greeting, basicallyQuestion } = require('./lib/middleware');
 const express = require('express');
 const app = express();
 const PORT = 4000;

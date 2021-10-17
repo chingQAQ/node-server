@@ -11,6 +11,6 @@
     "nodemon": "^2.0.13"
   },
   "scripts": {
-    "serve": "nodemon src/app-express.js"
+    "serve": "nodemon src/3.express-navigation/app.js"
   }
 }
