@@ -13,6 +13,7 @@ This repo is recap via Nodejs anything method and knowledge to create app, serve
 - Create an Express.js app which funnels the request through 2 middleware functions that log something to the console and return one response.
 - Handle requests to "/" and "/users" such that each request only has one handler/ middleware that does something with it.
 
-## express-navigation
+## express-app
 - Create an Express.js app witch severs two HTML files for '/' and '/users'.
 - Add some static files to this project that should be require by at least one of HTML files.
+- Use template engine to apply two route, and output filed data to index page.

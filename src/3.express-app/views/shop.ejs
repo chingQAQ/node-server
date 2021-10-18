@@ -1,0 +1,19 @@
+<%- include('includes/head.ejs') %>
+<title><%= title %></title>
+</head>
+
+<%- include('includes/body.ejs') %>
+<main>
+    <h1>My Products</h1>
+    <% if ( data.length > 0 ) { %>
+        <div>
+            <% for ( let i of data)  { %>
+                <p><%= i.title %></p>
+            <% } %>
+        </div>
+    <% } else { %>
+        <p>List of all the products...</p>
+    <% } %>
+</main>
+
+<%- include('includes/end.ejs') %>

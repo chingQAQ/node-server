@@ -1,10 +1,9 @@
 ﻿const express = require('express');
-const { resolve } = require('../lib');
 const route = express.Router();
 
 /* 404 handler */
 route.use((req, res) => {
-  res.sendFile(resolve('views', '404.html'));
+  res.render('404', { title: 'Page not found', path: '/error' });
 })
 
 /* 500 handler */

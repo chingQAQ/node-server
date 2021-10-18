@@ -1,9 +1,13 @@
 ﻿const express = require('express');
-const { resolve } = require('../lib');
+const { data } = require('./admin');
 const route = express.Router();
 
 route.get('/', (req, res) => {
-  res.sendFile(resolve('views', 'shop.html'));
+  res.render('shop', {
+    title: 'shop',
+    path: '/',
+    data
+  });
 })
 
 module.exports = route;
