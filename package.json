@@ -12,6 +12,6 @@
     "nodemon": "^2.0.13"
   },
   "scripts": {
-    "serve": "nodemon src/3.express-app/app.js"
+    "serve": "nodemon src/4.express-product/app.js"
   }
 }

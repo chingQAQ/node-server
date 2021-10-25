@@ -1,0 +1,14 @@
+# Dynamic Routes & Advanced Models
+- Add the product ID to path, make sure this id can be accessed with route.
+- Extraction Dynamic params.
+- Loading product detail data and render this view.
+- Passing Data to cart with POST requests.
+---
+- Add cart model.
+- Using query params to tall server can i edit this product.
+- When the product exist, pre-populating the edit product page with data.
+- Adding the product delete functionality.
+---
+- Deleting cart item in the product page.
+- Displaying cart item in cart page.
+- Deleting cart item in the cart page.
