@@ -1,3 +1,5 @@
-const path = require('path');
+const { join } = require('path');
 
-module.exports = path.dirname(process.mainModule.filename);
+module.exports.resolve = (...path) => {
+  return join(__dirname, '..', ...path);
+};
