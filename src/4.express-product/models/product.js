@@ -1,5 +1,4 @@
-const db = require('../util/database');
-const Cart = require('./cart');
+const Client = require('../util/database');
 
 module.exports = class Product {
   constructor(id, title, imageUrl, description, price) {
@@ -10,19 +9,23 @@ module.exports = class Product {
     this.price = price;
   }
 
-  save() {
-    
-  }
-
-  static deleteById(id) {
-    
-  }
-
-  static fetchAll() {
-    return db.execute('SELECT * FROM products');
-  }
-
-  static findById(id, cb) {
-
+  async save() {
+    try {
+      const insertResult = await Client.getDb().collection('products').insertOne(this);
+      if (!insertResult) {
+        throw new Error('insert is unsuccess');
+      }
+      
+      return {
+        insertResult,
+        status: 'done',
+        message: 'This data is insert.'
+      };
+    } catch (error) {
+      return {
+        status: 'false',
+        message: 'False to add data.'
+      };
+    }
   }
 };
