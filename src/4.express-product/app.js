@@ -10,13 +10,13 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', resolve('views'));
 
-// const shopRoutes = require('./routes/shop');
+const shopRoutes = require('./routes/shop');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(resolve('public')));
 
 app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use(shopRoutes);
 
 app.use(errorController.get404);
 
