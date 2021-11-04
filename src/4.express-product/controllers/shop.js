@@ -28,7 +28,6 @@ exports.getProduct = async (req, res, next) => {
 
 exports.getIndex = async (req, res, next) => {
   const response = await Product.fetchAll().catch(err => console.log(err));
-
   if (response) {
     return res.render('shop/index', {
       prods: response,

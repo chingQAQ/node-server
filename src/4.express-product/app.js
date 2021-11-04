@@ -4,6 +4,7 @@ const errorController = require('./controllers/error');
 const adminRoutes = require('./routes/admin');
 const Client = require('./util/database');
 const client = new Client();
+const Users = require('./controllers/user');
 
 const app = express();
 
@@ -14,6 +15,17 @@ const shopRoutes = require('./routes/shop');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(resolve('public')));
+app.use(async (req, res, next) => {
+  try {
+    const getUser = await Users.findById('61842d1141865ee2de71689f');
+    if (getUser) {
+      req.user = getUser;
+      next();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

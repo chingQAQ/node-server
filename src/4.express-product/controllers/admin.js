@@ -1,5 +1,3 @@
-// const Client = require('../util/database');
-const { ObjectId } = require('mongodb');
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
@@ -10,8 +8,8 @@ exports.getAddProduct = (req, res, next) => {
   });
 };
 
-exports.postAddProduct = async ({ body: { title, imageUrl, price, description } }, res, next) => {
-  const product = new Product(title, imageUrl, description, price);
+exports.postAddProduct = async ({ body: { title, imageUrl, price, description }, user }, res, next) => {
+  const product = new Product(title, imageUrl, description, price, null, user);
   const response = await product.save();
 
   if (response.status === 'done') {
@@ -43,7 +41,7 @@ exports.getEditProduct = async (req, res, next) => {
   return res.redirect('/');
 };
 
-exports.postEditProduct = async ({ body: { productId, title, imageUrl, price, description }}, res, next) => {
+exports.postEditProduct = async ({ body: { productId, title, imageUrl, price, description }, user }, res, next) => {
   const prodId = productId;
   const updatedTitle = title;
   const updatedPrice = price;
@@ -54,7 +52,8 @@ exports.postEditProduct = async ({ body: { productId, title, imageUrl, price, de
     updatedImageUrl,
     updatedDesc,
     updatedPrice,
-    new ObjectId(prodId),
+    prodId,
+    user
   );
   const dispatchUpdate = await updatedProduct.save().catch(error => console(error));
 
@@ -75,8 +74,11 @@ exports.getProducts = async (req, res, next) => {
   }
 };
 
-// exports.postDeleteProduct = (req, res, next) => {
-//   const prodId = req.body.productId;
-//   Product.deleteById(prodId);
-//   res.redirect('/admin/products');
-// };
+exports.postDeleteProduct = async (req, res, next) => {
+  const prodId = req.body.productId;
+  const response = await Product.deleteById(prodId).catch(err => console.log(err));
+
+  if (response) {
+    return res.redirect('/admin/products');
+  }
+};
