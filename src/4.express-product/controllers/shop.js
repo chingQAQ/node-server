@@ -1,5 +1,5 @@
 const Product = require('../models/product');
-const Cart = require('../models/cart');
+const User = require('../models/user');
 
 exports.getProducts = async (req, res, next) => {
   const response = await Product.fetchAll().catch(err => console.log(err));
@@ -58,13 +58,19 @@ exports.getIndex = async (req, res, next) => {
 //   });
 // };
 
-// exports.postCart = (req, res, next) => {
-//   const prodId = req.body.productId;
-//   Product.findById(prodId, product => {
-//     Cart.addProduct(prodId, product.price);
-//   });
-//   res.redirect('/cart');
-// };
+exports.postCart = async (req, res, next) => {
+  const prodId = req.body.productId;
+
+  try {
+    const product = await Product.findById(prodId);
+    req.user.addToCart(product);
+
+
+  } catch (error) {
+    console.log(error);
+  }
+
+};
 
 // exports.postCartDeleteProduct = (req, res, next) => {
 //   const prodId = req.body.productId;

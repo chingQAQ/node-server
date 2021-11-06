@@ -4,7 +4,7 @@ const errorController = require('./controllers/error');
 const adminRoutes = require('./routes/admin');
 const Client = require('./util/database');
 const client = new Client();
-const Users = require('./controllers/user');
+const Users = require('./models/user');
 
 const app = express();
 
@@ -19,7 +19,7 @@ app.use(async (req, res, next) => {
   try {
     const getUser = await Users.findById('61842d1141865ee2de71689f');
     if (getUser) {
-      req.user = getUser;
+      req.user = new Users(getUser.name, getUser.email, getUser.cart, getUser._id);
       next();
     }
   } catch (error) {
