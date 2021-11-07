@@ -43,7 +43,74 @@ module.exports = class User {
           cart: updateToCart
         }}
       );
+  }
 
+  async getCartProducts() {
+    const productsId = this.cart.items.map(i => i.productId);
+    try {
+      const getCart = await Client
+        .getDb()
+        .collection('products')
+        .find({ _id: { $in: productsId } })
+        .toArray();
+
+      return getCart.map(i => ({
+        ...i,
+        qty: this.cart.items.find(j =>
+          j.productId.toString() === i._id.toString()
+        ).quantity
+      }));
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  }
+
+  deleteProduct(productId) {
+    try {
+      return Client
+        .getDb()
+        .collection('users')
+        .updateOne(
+          { _id: new ObjectId(this._id) },
+          { $pull: { 'cart.items': { productId: new ObjectId(productId) } }});
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
+  async addOrder() {
+    try {
+      const cartProducts = await this.getCartProducts();
+      const order = {
+        order: cartProducts,
+        user: {
+          _id: new ObjectId(this._id),
+          name: this.name
+        }
+      }
+
+      this.cart.items = [];
+
+      await Client
+        .getDb()
+        .collection('users')
+        .updateOne(
+          { _id: new ObjectId(this._id) },
+          { $set: { 'cart.items': this.cart.items } })
+
+      return Client
+        .getDb()
+        .collection('orders')
+        .insertOne(order);
+
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
+  getOrder() {
+    return Client.getDb().collection('orders').find({'user._id': new ObjectId(this._id)}).toArray();
   }
 
   static save() {
